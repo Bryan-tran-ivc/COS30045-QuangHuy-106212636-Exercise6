@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Explore TV models — Exercise 6</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="#top">COS30045</a>
+    <nav aria-label="Page sections"><a href="#filters">Filters</a><a href="#chart">Chart</a></nav>
+  </header>
+
+  <main id="top">
+    <div class="page-heading">
+      <p class="course-label">Exercise 6 <span>·</span> Week 6</p>
+      <h1>Explore TV models</h1>
+      <p>Change the filters to compare brands. Hover, focus or click a bar for details.</p>
+    </div>
+
+    <div class="dashboard">
+      <aside id="filters" class="controls" aria-labelledby="filter-title">
+        <div class="control-heading"><h2 id="filter-title">Filters</h2><button id="reset-button" type="button">Reset</button></div>
+
+        <label for="technology-filter">Screen technology</label>
+        <select id="technology-filter"><option value="All">All technologies</option></select>
+
+        <label for="brand-search">Brand name</label>
+        <input id="brand-search" type="search" placeholder="Search a brand" autocomplete="off">
+
+        <label for="rating-filter">Minimum energy rating: <output id="rating-output">1</output></label>
+        <input id="rating-filter" type="range" min="1" max="6" step="1" value="1">
+
+        <fieldset>
+          <legend>Sort by</legend>
+          <label class="radio-row"><input type="radio" name="sort" value="count" checked> Model count</label>
+          <label class="radio-row"><input type="radio" name="sort" value="brand"> Brand name</label>
+        </fieldset>
+
+        <div class="summary" aria-live="polite">
+          <strong id="result-count">Loading…</strong>
+          <span id="model-total"></span>
+        </div>
+      </aside>
+
+      <section id="chart" class="visualisation" aria-labelledby="chart-title">
+        <div class="chart-heading"><h2 id="chart-title">Models by brand</h2><span>Hover or select a bar</span></div>
+        <div id="interactive-chart" class="responsive-svg-container"></div>
+        <p id="empty-message" class="empty-message" hidden>No brands match these filters.</p>
+        <p class="caption">Bar length represents model count. The CSV contains practice values.</p>
+      </section>
+    </div>
+  </main>
+
+  <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+  <footer><span>COS30045 · Week 6</span><span>106212636</span></footer>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

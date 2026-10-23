@@ -1,0 +1,36 @@
+brand,technology,count,avgEnergy,rating
+Samsung,LED,164,132,5
+Samsung,QLED,292,146,4
+Samsung,OLED,88,119,5
+LG,LED,141,129,5
+LG,QLED,124,142,4
+LG,OLED,213,111,6
+Hisense,LED,186,137,4
+Hisense,QLED,216,151,4
+Hisense,Mini LED,97,126,5
+TCL,LED,178,135,4
+TCL,QLED,194,149,4
+TCL,Mini LED,105,124,5
+Sony,LED,103,128,5
+Sony,OLED,109,114,6
+Sony,Mini LED,82,123,5
+Panasonic,LED,94,131,5
+Panasonic,OLED,87,116,6
+Panasonic,LCD,61,158,3
+Philips,LED,92,134,4
+Philips,OLED,66,118,5
+Philips,LCD,58,161,3
+JVC,LED,77,139,4
+JVC,LCD,71,164,3
+Toshiba,LED,69,140,4
+Toshiba,QLED,58,152,4
+Kogan,LED,84,143,3
+Kogan,QLED,43,155,3
+Sharp,LED,66,136,4
+Sharp,LCD,45,162,3
+FFalcon,LED,59,142,3
+FFalcon,QLED,37,154,3
+Loewe,OLED,42,108,6
+Loewe,LED,25,127,5
+Metz,LED,31,138,4
+Metz,OLED,27,115,5
