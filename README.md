@@ -9,3 +9,7 @@ A D3.js website for exploring TV energy data.
 
 The charts use the dataset provided for Exercise 6.
 To view the website, open index.html through a local web server so the CSV files can load.
+
+## AI declaration
+
+ChatGPT helped with the D3 charts, filters, tooltips and page styling.
