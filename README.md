@@ -1,11 +1,11 @@
-# Exercise 6 — Interactivity
+# Exercise 6 - TV Energy Data
 
-Use the controls to filter TV models by screen technology, brand name and minimum energy rating. You can also sort the bars or reset everything. Hover, focus or click a bar to see its details.
+A D3.js website for exploring TV energy data.
 
-`js/main.js` reads the CSV, filters the rows and updates the D3 chart. The values in `data/tvInteractive.csv` are for practice; replace them with your own data before presenting the results as real data.
+- **Bar chart:** Compare brands.
+- **Histogram:** Explore energy consumption by screen type.
+- **Scatterplot:** Compare energy use and star ratings.
+- **Tooltips:** View details for each TV.
 
-Run this command in this folder, then visit `http://localhost:5500`:
-
-```bash
-python3 -m http.server 5500
-```
+The charts use the dataset provided for Exercise 6.
+To view the website, open index.html through a local web server so the CSV files can load.

@@ -1,0 +1,8 @@
+.exercise-chart { margin-top: 24px; }
+.screen-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 8px; }
+.screen-filter { padding: 7px 14px; border: 1px solid #d4d4d8; border-radius: 5px; background: #fff; color: var(--ink); font: inherit; font-size: 13px; cursor: pointer; }
+.screen-filter.active { background: #577d72; border-color: #577d72; color: #fff; }
+.histogram-bar { fill: #438f8a; }
+.chart-axis-label, .legend-label { fill: var(--muted); font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.tv-point { cursor: pointer; }
+.tv-point:focus { stroke: #18181b; stroke-width: 2; opacity: 1; }

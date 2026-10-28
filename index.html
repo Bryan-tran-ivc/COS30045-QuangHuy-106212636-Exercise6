@@ -4,19 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Explore TV models — Exercise 6</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/visualisation.css">
 </head>
 <body>
   <header class="site-header">
     <a class="site-name" href="#top">COS30045</a>
-    <nav aria-label="Page sections"><a href="#filters">Filters</a><a href="#chart">Chart</a></nav>
+    <nav aria-label="Page sections"><a href="#filters">Brands</a><a href="#histogram-section">Histogram</a><a href="#scatter-section">Scatterplot</a></nav>
   </header>
 
   <main id="top">
     <div class="page-heading">
       <p class="course-label">Exercise 6 <span>·</span> Week 6</p>
       <h1>Explore TV models</h1>
-      <p>Change the filters to compare brands. Hover, focus or click a bar for details.</p>
+      <p>Explore TV models by brand, energy use and screen technology.</p>
     </div>
 
     <div class="dashboard">
@@ -30,7 +31,7 @@
         <input id="brand-search" type="search" placeholder="Search a brand" autocomplete="off">
 
         <label for="rating-filter">Minimum energy rating: <output id="rating-output">1</output></label>
-        <input id="rating-filter" type="range" min="1" max="6" step="1" value="1">
+        <input id="rating-filter" type="range" min="1" max="8" step="0.5" value="1">
 
         <fieldset>
           <legend>Sort by</legend>
@@ -48,14 +49,31 @@
         <div class="chart-heading"><h2 id="chart-title">Models by brand</h2><span>Hover or select a bar</span></div>
         <div id="interactive-chart" class="responsive-svg-container"></div>
         <p id="empty-message" class="empty-message" hidden>No brands match these filters.</p>
-        <p class="caption">Bar length represents model count. The CSV contains practice values.</p>
+        <p class="caption">Brands with more than 10 matching models are shown. The charts below use all TV records.</p>
       </section>
     </div>
+
+    <section id="histogram-section" class="visualisation exercise-chart" aria-labelledby="histogram-title">
+      <div class="chart-heading"><div><h2 id="histogram-title">TV energy consumption</h2><p class="caption">Number of models in each 200 kWh/year range.</p></div><span>Exercise 6.1 &amp; 6.2</span></div>
+      <div id="filters_screen" class="screen-filters" aria-label="Filter histogram by screen technology"></div>
+      <p class="caption" id="histogram-count" aria-live="polite">Loading data…</p>
+      <div id="histogram" class="responsive-svg-container"></div>
+    </section>
+
+    <section id="scatter-section" class="visualisation exercise-chart" aria-labelledby="scatter-title">
+      <div class="chart-heading"><div><h2 id="scatter-title">Energy use and star rating</h2><p class="caption">Each point is one TV model. Colour indicates screen technology.</p></div><span>Exercise 6.3 &amp; 6.4</span></div>
+      <div id="scatterplot" class="responsive-svg-container"></div>
+      <p class="caption">Hover, focus or select a point to see its model and screen size.</p>
+    </section>
   </main>
 
   <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+  <div id="scatter-tooltip" class="tooltip" role="status" aria-live="polite"></div>
   <footer><span>COS30045 · Week 6</span><span>106212636</span></footer>
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/shared-constants.js"></script>
+  <script src="js/histogram.js"></script>
+  <script src="js/interactions.js"></script>
+  <script src="js/load-data.js"></script>
 </body>
 </html>

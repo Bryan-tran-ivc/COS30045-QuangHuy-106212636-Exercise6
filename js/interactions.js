@@ -31,18 +31,16 @@ const barsLayer = innerChart.append("g");
 const labelsLayer = innerChart.append("g");
 const xAxisLayer = innerChart.append("g").attr("class", "axis");
 
-d3.csv("data/tvInteractive.csv", d => {
-  if (!d.brand?.trim() || !d.technology?.trim()) return null;
-  return {
-    brand: d.brand.trim(),
-    technology: d.technology.trim(),
-    count: +d.count,
-    avgEnergy: +d.avgEnergy,
-    rating: +d.rating
-  };
-}).then(data => {
-  sourceData = data;
-  const technologies = [...new Set(data.map(d => d.technology))].sort();
+function initBrandChart(data) {
+  const brandNames = { lg: "LG", jvc: "JVC", tcl: "TCL", ffalcon: "FFalcon" };
+  sourceData = data.map(d => ({
+    brand: brandNames[d.brand.toLowerCase()] || d.brand.replace(/\b\w/g, c => c.toUpperCase()),
+    technology: d.screenTech,
+    count: 1,
+    avgEnergy: d.energyConsumption,
+    rating: d.star
+  }));
+  const technologies = [...new Set(sourceData.map(d => d.technology))].sort();
   controls.technology.selectAll("option.technology-option")
     .data(technologies)
     .join("option")
@@ -59,7 +57,7 @@ d3.csv("data/tvInteractive.csv", d => {
   d3.selectAll("input[name='sort']").on("change", updateChart);
   controls.reset.on("click", resetFilters);
   updateChart();
-}).catch(console.error);
+}
 
 function filteredAndGroupedData() {
   const technology = controls.technology.property("value");
@@ -76,7 +74,7 @@ function filteredAndGroupedData() {
     rows => ({
       count: d3.sum(rows, d => d.count),
       avgEnergy: d3.sum(rows, d => d.avgEnergy * d.count) / d3.sum(rows, d => d.count),
-      technologies: rows.map(d => d.technology).sort().join(", ")
+      technologies: [...new Set(rows.map(d => d.technology))].sort().join(", ")
     }),
     d => d.brand
   ).map(([brand, values]) => ({ brand, ...values }));
@@ -85,7 +83,7 @@ function filteredAndGroupedData() {
   grouped.sort(sortValue === "brand"
     ? (a, b) => d3.ascending(a.brand, b.brand)
     : (a, b) => d3.descending(a.count, b.count));
-  return grouped;
+  return grouped.filter(d => d.count > 10);
 }
 
 function updateChart() {
@@ -214,4 +212,40 @@ function resetFilters() {
   controls.ratingOutput.text("1");
   d3.select("input[name='sort'][value='count']").property("checked", true);
   updateChart();
+}
+function populateFilters(data) {
+  const options = ['All', 'LCD', 'LED', 'OLED'];
+  const buttons = d3.select('#filters_screen').selectAll('button').data(options).join('button')
+    .attr('type', 'button').attr('class', 'screen-filter')
+    .text(d => d === 'All' ? 'All screens' : d);
+  function selectScreen(technology) {
+    buttons.classed('active', d => d === technology).attr('aria-pressed', d => String(d === technology));
+    drawHistogram(technology === 'All' ? data : data.filter(d => d.screenTech === technology));
+  }
+  buttons.on('click', (_, technology) => selectScreen(technology));
+  selectScreen('All');
+}
+
+function handleMouseEvents() {
+  const tooltip = d3.select('#scatter-tooltip');
+  let pinned = null;
+  function show(event, d) {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX > 0 ? event.clientX : bounds.right;
+    const y = event.clientY > 0 ? event.clientY : bounds.top;
+    tooltip.selectAll('*').remove();
+    tooltip.append('strong').text(`${d.brand} ${d.model}`);
+    tooltip.append('span').text(`${d.screenSize} inches · ${d.screenTech}`);
+    tooltip.append('span').text(`${d.star} stars · ${d.energyConsumption} kWh/year`);
+    tooltip.style('left', `${Math.max(8, Math.min(window.innerWidth - 220, x + 14))}px`)
+      .style('top', `${Math.max(8, Math.min(window.innerHeight - 110, y + 14))}px`).classed('visible', true);
+  }
+  d3.select('#scatterplot').selectAll('circle.tv-point')
+    .on('pointerenter pointermove', function(event, d) { if (!pinned) show(event, d); })
+    .on('pointerleave', () => { if (!pinned) tooltip.classed('visible', false); })
+    .on('focus', show).on('blur', () => { if (!pinned) tooltip.classed('visible', false); })
+    .on('click', function(event, d) { pinned = pinned === this ? null : this; pinned ? show(event, d) : tooltip.classed('visible', false); })
+    .on('keydown', function(event, d) {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); pinned = pinned === this ? null : this; pinned ? show(event, d) : tooltip.classed('visible', false); }
+    });
 }
